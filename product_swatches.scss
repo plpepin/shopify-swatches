@@ -1,0 +1,193 @@
+@mixin prefix($property, $value) {
+  -webkit-#{$property}: #{$value};
+  -moz-#{$property}: #{$value};
+  -ms-#{$property}: #{$value};
+  -o-#{$property}: #{$value};
+  #{$property}: #{$value};
+}
+
+@mixin transition($transition: 0.1s all) {
+  @include prefix('transition', #{$transition});
+}
+
+@mixin transform($transform) {
+  @include prefix(transform, $transform);
+}
+
+/* -- Swatches solution written by whiteoctop.us -- */
+
+// Help tool for alignment to grid. <body class="outline" ...
+.outline * {
+  //outline: 1px dotted grey; 
+}
+
+.swatches {
+ 
+  // Basics
+  // Basics
+  // Basics
+  
+  margin: 2em 0;
+  
+  select, input[type=radio] {
+    display: none; 
+  }
+  
+  label {
+    // Just in case
+    cursor: pointer;
+  }
+  
+  // Animation
+  // Animation
+  // Animation
+  span.title,
+  label.color::after {
+   	@include transition(all 0.2s ease-in-out); 
+  }
+  
+  // Store Specific
+  // Store Specific
+  // Store Specific
+  &, span.title {
+    font-family: "config-rounded-regular" !important;
+    font-size: 11.2px;
+    text-transform: uppercase;
+  }
+  
+  // Swatches as buttons..
+  &:not(.swatch-color) {
+   
+    display: flex;
+    flex-direction: column;
+    
+    .swatch-options {
+    	display: flex;
+      	justify-content: space-between;
+      	flex-wrap: wrap;
+    }
+    
+	  // Selected State
+    input[type=radio]:checked + label span {
+      	background: black;
+      	color: white;
+    }
+    
+    // Normal State
+    label {
+        flex: 1 0 44%;
+        margin: 2em 2% 0;
+    }
+    
+    // Pipeline Shopify Theme specifics + custom store css
+    label span {
+      
+      font-weight: 400;
+      font-style: normal;
+      letter-spacing: 1px;
+      color: #000;
+      display: block;
+      padding: 8px 10px;
+      margin: 0;
+      line-height: 1.42;
+      vertical-align: middle;
+      white-space: nowrap;
+      
+      -webkit-font-smoothing: antialiased;
+      
+      background-color: #fff;
+      border: 1px solid #000;
+      border-radius: 2px;
+     
+    }
+    
+    label:hover span {
+     	background: black;
+      	color: white;
+    }
+    
+  }
+  
+  // Swatches as circles
+  &.swatch-color .swatch-options {
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    
+    // Selected State and hover states
+    input[type=radio]:checked + label,
+    label.color:hover {
+    
+    	// Text Underline
+    	span {
+    		//border-bottom: 1px solid;
+      }
+    
+    	// Circle Outline with slight movement
+    	&::after {
+          border: 2px solid white;
+          box-shadow: 0 0 0 3px #00000038;
+          transition-duration: 0.1s;
+          transition-timing-function: $ease-out-and-back;
+        }
+    }
+    
+    // Normal State
+    label {
+     	padding: 0 0 4em;
+      	position: relative;
+      	width: 33%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+    
+    label::after {
+    	content: '';
+      	border: 2px solid #fafafa;
+      	width: 22px;
+      	height: 22px;
+      	border-radius: 22px;
+      	background: grey;
+      	position: absolute;
+      	left: 50%;
+    	transform: translate(-50%, 100%);
+      	bottom: 22px;
+    }
+    
+  }
+  
+  // Store Specific
+  // Store Specific
+  // Store Specific
+  
+  // Here is where you change the colors
+  &.swatch-color .swatch-options {
+    
+    [for=color-storm-green]::after {
+    	background: #005151;  
+    }
+    
+    [for=color-light-grey]::after {
+    	background: #d0d3d4;  
+    }
+    
+    [for=color-delicate-blue]::after {
+    	background: #bdd6e6;  
+    }
+    
+    [for=color-tickled-pink]::after {
+    	background: #ebb4bb;  
+    }
+    
+    [for=color-iron-gate-black]::after {
+    	background: #4b4f54;  
+    }
+    
+    [for=color-pale-gold]::after {
+    	background: #bd9b60;  
+    }
+    
+  }
+}
