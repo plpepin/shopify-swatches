@@ -1,0 +1,56 @@
+{% unless product.has_only_default_variant %}
+      
+    {% for option in product.options_with_values %}
+
+      {% assign option-name-handle = option.name | handleize %}
+
+      <div class="selector-wrapper js swatches swatch-{{ option-name-handle }}">
+        <span class="heading-swatch-name">{{ option.name }}</span>
+        <div class="swatch-options">
+        
+        <!-- Original Code from Pipeline Theme v4 mixed with new swatches code -->
+        {% for value in option.values %}
+            {% assign variant_available = true %}
+            {% if product.options.size == 1 %}
+                {% unless product.variants[forloop.index0].available  %}
+                    {% assign variant_avialable = false %}
+                {% endunless %}
+            {% endif %}
+            
+            <!-- Necessary swatches code: The radio button for option selection and label for firing the onchange event on its related input -->
+            <input type="radio" name="{{ option-name-handle }}" value="{{ value }}" id="{{ option-name-handle }}-{{ value | handleize }}" {% if option.selected_value == value %}checked{% endif %} {% unless variant_available %}disabled{% endunless %} class="masks-radiobuttons">
+            <label for="{{ option-name-handle }}-{{ value | handleize }}" class="{{ option-name-handle }} {% if forloop.first %}first{% elsif forloop.last %}last{% endif %}"><span class="title">{{ value }}</span></label>
+            
+        {% endfor %}
+        </div>
+        
+        <!-- Original Code from Pipeline Theme v4: This will be hidden and be used to fire an onchange event to the main variant picker, delegated by the radio buttons' onchange event... wow lol -->
+        <select class="single-option-selector single-option-selector-{{ section.id }}" id="SingleOptionSelector-{{ section.id }}-{{ forloop.index0 }}" data-section="{{ section.id }}" data-index="option{{ forloop.index }}">
+          {% for value in option.values %}
+            {% assign variant_avialable = true %}
+            {% if product.options.size == 1 %}
+              {% unless product.variants[forloop.index0].available  %}
+                {% assign variant_avialable = false %}
+              {% endunless %}
+            {% endif %}
+            <option value="{{ value | escape }}"{% if option.selected_value == value %} selected="selected"{% endif %}>{{ value }}{% unless variant_avialable %} - {{ 'products.product.sold_out' | t }}{% endunless %}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+    {% endfor %}
+
+    <!-- Original Code from Pipeline Theme v4: Main variant selector, which is usually hidden when variants are separated in individual option select elements -->
+    <select name="id" id="ProductSelect-{{ section.id }}" data-section="{{ section.id }}" class="product-form__variants no-js">
+    {% for variant in product.variants %}
+      {% if variant.available %}
+        <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}">
+          {{ variant.title }}
+        </option>
+      {% else %}
+        <option disabled="disabled">{{ variant.title }} - {{ 'products.product.sold_out' | t }}</option>
+      {% endif %}
+    {% endfor %}
+    </select>
+
+{% endunless %}
