@@ -1,0 +1,17 @@
+<select class="single-option-selector single-option-selector-{{ section.id }} product-form__input {% if option.name == "Size" %}hide{% endif %}"
+                      id="SingleOptionSelector-{{ forloop.index0 }}"
+                      data-index="option{{ forloop.index }}"
+                    >
+                      {% for value in option.values %}
+                        <option value="{{ value | escape }}"{% if option.selected_value == value %} selected="selected"{% endif %}>{{ value }}</option>
+                      {% endfor %}
+                    </select>
+                    
+                    {% if option.name == "Size" %}
+                    <div class="swatches-size">
+                      {% for value in option.values %}
+                      <input type="radio" name="size" value="{{ value | escape }}"{% if option.selected_value == value %} checked="checked"{% endif %} id="swatch-size-{{ value | handle }}">
+                      <label class="swatch" for="swatch-size-{{ value | handle }}">{{ value }}</label>
+                      {% endfor %}
+                    </div>
+                    {% endif %}
