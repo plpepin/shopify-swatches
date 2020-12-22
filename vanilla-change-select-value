@@ -1,0 +1,8 @@
+/* Handle the changing of the Size value in the dropdown when size swatch is selected */
+  document.querySelectorAll('input[type=radio][name=size]').forEach(function(el){
+      el.addEventListener('click', function(){
+          var selectElement = this.parentElement.previousElementSibling;
+          selectElement.value = this.value;
+          selectElement.dispatchEvent(new Event('change'));    
+      });
+  });
