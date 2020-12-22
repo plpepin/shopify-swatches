@@ -1,3 +1,4 @@
+<style>
 @media (min-width: 750px) {
   
   /* Start of desktop left thumbs when less than 4 thumbs */
@@ -56,3 +57,20 @@
   /* End sticky */
   
 }
+</style>
+
+<script>
+/* Use the browser's scrolling to hash ability to scroll the page to the matching large image on selection of thumb */
+if ( window.innerWidth >= 750 ){
+  
+  /* Scroll the page down to the matching large image on thumb active */
+  
+  document.querySelectorAll('[data-media-id]').forEach(function(elmnt){
+      elmnt.addEventListener('mediaVisible', function(e){
+          /* When mediaVisible event fires (by _switchMedia) in the slider large image, change hash, which by default scrolls the page down */
+          location.hash = e.target.id;
+      });
+  })
+  
+}
+</script>
