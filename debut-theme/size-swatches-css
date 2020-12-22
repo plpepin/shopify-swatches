@@ -1,0 +1,28 @@
+/* Size Swatches - Start*/
+.swatches-size {
+   display: inline-flex;
+}
+
+.swatches-size input {
+ 	display: none; 
+}
+
+.product-form__item label.swatch {
+  font-size: 13px;
+  background-color: #fafafa;
+  display: inline-flex;
+  min-width: 40px;
+  min-height: 40px;
+  margin-right: 8px;
+    margin-bottom: 8px;
+  border: 1px solid #fafafa;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer
+}
+
+.swatches-size input:checked + .swatch {
+  border: 1px solid #808284;
+}
+
+/* End Size Swatches */
